@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Meine Projekte">
+    <title>Meine Projekte</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            min-height: 100vh;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 520px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-top: 12px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 6px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+        }
+
+        .header p {
+            color: #888;
+            font-size: 13px;
+            font-weight: 400;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 60px;
+        }
+
+        .project-card {
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 16px;
+            text-decoration: none;
+            color: #1a1a1a;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .project-card:hover {
+            border-color: #d0d0d0;
+            background: #fefefe;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .project-card:active {
+            background: #f8f8f8;
+        }
+
+        .project-icon {
+            font-size: 24px;
+            min-width: 24px;
+        }
+
+        .project-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .project-title {
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 3px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .project-desc {
+            font-size: 12px;
+            color: #999;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .external-link {
+            color: #bbb;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .project-card:hover .external-link {
+            color: #666;
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .project-card {
+                padding: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Projekte</h1>
+        </div>
+
+        <div id="projectsList" class="projects-grid">
+            <!-- Projekte werden hier eingefügt -->
+        </div>
+    </div>
+
+    <script>
+        // Füge hier deine Projekte ein
+        // Format: { title: "Name", description: "Kurze Beschreibung", url: "https://example.com", icon: "Emoji" }
+        const projects = [
+            {
+                title: "Projekt 1",
+                description: "Kurze Beschreibung",
+                url: "https://example.com",
+                icon: "🎨"
+            },
+            {
+                title: "Projekt 2",
+                description: "Eine weitere Beschreibung",
+                url: "https://example.com/2",
+                icon: "💻"
+            },
+            // Füge weitere Projekte hier ein...
+        ];
+
+        // Projekte automatisch rendern
+        function renderProjects() {
+            const projectsList = document.getElementById("projectsList");
+            projectsList.innerHTML = projects.map(project => `
+                <a href="${project.url}" class="project-card" target="_blank" rel="noopener noreferrer">
+                    <div class="project-icon">${project.icon}</div>
+                    <div class="project-info">
+                        <div class="project-title">${project.title}</div>
+                        <div class="project-desc">${project.description}</div>
+                    </div>
+                    <div class="external-link">→</div>
+                </a>
+            `).join("");
+        }
+
+        // Beim Laden der Seite
+        renderProjects();
+    </script>
+</body>
+</html>
