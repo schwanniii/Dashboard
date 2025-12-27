@@ -99,13 +99,6 @@
             text-overflow: ellipsis;
         }
 
-        .project-desc {
-            font-size: 12px;
-            color: #999;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
 
         .external-link {
             color: #bbb;
@@ -140,22 +133,54 @@
     </div>
 
     <script>
-        // Füge hier deine Projekte ein
-        // Format: { title: "Name", description: "Kurze Beschreibung", url: "https://example.com", icon: "Emoji" }
         const projects = [
             {
-                title: "Projekt 1",
-                description: "Kurze Beschreibung",
-                url: "https://example.com",
-                icon: "🎨"
+                title: "Stadt-Land-Fluss",
+                url: "https://schwanniii.github.io/Stadt-Land-Fluss/",
+                icon: "🏙"
             },
+
             {
-                title: "Projekt 2",
-                description: "Eine weitere Beschreibung",
-                url: "https://example.com/2",
-                icon: "💻"
+                title: "NATO-Alphabet",
+                url: "https://schwanniii.github.io/NATO-Alphabet/",
+                icon: "🔤"
             },
-            // Füge weitere Projekte hier ein...
+
+            {
+                title: "bundeslaender-benennen",
+                url: "https://schwanniii.github.io/bundeslaender-benennen/",
+                icon: "🇩🇪"
+            },
+
+            {
+                title: "Risiko",
+                url: "https://schwanniii.github.io/Risiko/",
+                icon: "🎲"
+            },
+
+            {
+                title: "ranking",
+                url: "https://schwanniii.github.io/ranking/",
+                icon: "🏆"
+            },
+
+            {
+                title: "Schere-Stein-Papier",
+                url: "https://schwanniii.github.io/Schere-Stein-Papier/",
+                icon: "✂️"
+            },
+
+            {
+                title: "Zeitrechner",
+                url: "https://schwanniii.github.io/Zeitrechner/",
+                icon: "⏰"
+            },
+
+            {
+                title: "Kosinusaehnlichkeit",
+                url: "https://schwanniii.github.io/Kosinusaehnlichkeit/",
+                icon: "🔢"
+            },
         ];
 
         // Projekte automatisch rendern
@@ -166,7 +191,6 @@
                     <div class="project-icon">${project.icon}</div>
                     <div class="project-info">
                         <div class="project-title">${project.title}</div>
-                        <div class="project-desc">${project.description}</div>
                     </div>
                     <div class="external-link">→</div>
                 </a>
