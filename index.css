@@ -1,0 +1,376 @@
+/* 1. Kontrastreiches Farbschema */
+:root {
+    --bg-color: #ffffff;         /* Pures Weiß für maximalen Kontrast */
+    --text-main: #000000;        /* Tiefschwarz */
+    --text-muted: #444446;       /* Deutlich dunkleres, lesbares Grau */
+    --card-bg: #ffffff;
+    --card-border: #d2d2d7;      /* Gut sichtbare Rahmenlinie */
+    --card-shadow: rgba(0, 0, 0, 0.04);
+    --hover-shadow: rgba(0, 0, 0, 0.12);
+    --accent: #000000;
+}
+
+body.dark {
+    --bg-color: #000000;         /* Absolutes Tiefschwarz */
+    --text-main: #ffffff;         /* Pures Weiß */
+    --text-muted: #b0b0b5;       /* Helles, kontraststarkes Grau */
+    --card-bg: #0c0c0e;          /* Minimal helleres Anthrazit */
+    --card-border: rgba(255, 255, 255, 0.22); /* Knackiger, strahlender Rahmen */
+    --card-shadow: rgba(0, 0, 0, 0.9);
+    --hover-shadow: rgba(255, 255, 255, 0.06);
+    --accent: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 80px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative;
+}
+
+/* Theme-Wechsler Start */
+.theme-menu-container {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: inline-block;
+    z-index: 1000;
+}
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.theme-toggle-btn:hover,
+.theme-menu-container.active .theme-toggle-btn {
+    background: var(--card-bg);
+    border-color: var(--text-muted);
+}
+
+.theme-menu-container svg {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--text-main);
+    stroke-width: 2;
+    transition: stroke 0.2s;
+}
+
+/* DYNAMISCHE ICON-ANZEIGE AUF DEM BUTTON */
+/* Standardmäßig alle ausblenden */
+.theme-toggle-btn svg { display: none; }
+
+/* Zeige das jeweilige Icon basierend auf dem data-attribute des Containers */
+.theme-menu-container[data-current="light"] .icon-sun { display: block; }
+.theme-menu-container[data-current="dark"] .icon-moon { display: block; }
+.theme-menu-container[data-current="system"] .icon-system { display: block; }
+
+
+/* DAS ELEGANTE SCHWEBENDE DROPDOWN */
+.theme-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--bg-main, #ffffff); /* Fallback falls Variable anders heißt */
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 6px;
+    min-width: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+    pointer-events: none;
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), 
+                transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .theme-dropdown {
+    background: #1c1c1e; /* Hochwertiges iOS/Apple-Dark-Grau für Overlays */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Sichtbarer Zustand des Dropdowns */
+.theme-menu-container.active .theme-dropdown {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* Die einzelnen Optionen im Menü */
+.theme-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: background-color 0.15s, color 0.15s;
+}
+
+.theme-option svg {
+    width: 16px;
+    height: 16px;
+    stroke: var(--text-muted);
+}
+
+.theme-option:hover {
+    background: var(--card-bg);
+    color: var(--text-main);
+}
+
+.theme-option:hover svg {
+    stroke: var(--text-main);
+}
+
+/* Aktive Option markieren */
+.theme-option.selected {
+    color: var(--text-main);
+    background: var(--card-bg);
+}
+
+.theme-option.selected svg {
+    stroke: var(--text-main);
+}
+/* Theme-Wechsler Ende */
+
+.dashboard {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.header h1 {
+    font-size: 36px;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    margin-bottom: 6px;
+}
+
+.profile-info {
+    font-size: 14px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Hält alles bombenfest ganz links */
+    flex-wrap: wrap;             /* Erlaubt den Umbruch der E-Mail */
+    row-gap: 4px;                /* Abstand nach unten, wenn es umbricht */
+}
+
+.profile-name {
+    white-space: nowrap;
+    /* Der rechte Abstand zum Divider, solange alles in einer Zeile steht */
+    margin-right: 8px; 
+}
+
+.profile-divider {
+    user-select: none;
+    margin-right: 8px;
+}
+
+.profile-email {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    white-space: nowrap;         /* E-Mail bricht nur als Ganzes um */
+}
+
+.profile-email:hover {
+    color: var(--text-main);
+    text-decoration: underline;
+}
+
+/* 
+  DER TRICK: Wenn das Stylesheet bemerkt, dass die E-Mail nicht mehr 
+  in dieselbe Zeile passt, schaltet eine Media-Query (oder CSS Wrap-Erkennung) 
+  den Divider ab. Da wir den genauen Umbruchpunkt anhand deiner Textlänge kennen:
+*/
+@media (max-width: 360px) { /* Passe die Pixelanzahl kurz an, ab wann deine E-Mail umbricht */
+    .profile-divider {
+        display: none;
+    }
+    .profile-name {
+        margin-right: 0;
+        width: 100%; /* Zwingt die E-Mail zusätzlich nach unten */
+    }
+}
+
+/* Premium Karten-Animation */
+.card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 28px;
+    text-decoration: none;
+    color: var(--text-main);
+    box-shadow: 0 4px 20px var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 160px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px var(--hover-shadow);
+    border-color: var(--text-main); /* Schärferer Rahmen beim Hover */
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.card-icon {
+    width: 22px;
+    height: 22px;
+    stroke: var(--text-muted);
+    stroke-width: 1.5;
+    fill: none;
+    margin-bottom: 32px;
+    transition: stroke 0.3s ease;
+}
+
+.card:hover .card-icon {
+    stroke: var(--accent);
+}
+
+.hero-zone .card { min-height: 200px; }
+.premium-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.grid-full { grid-column: span 2; min-height: 180px; }
+
+/* ZONE 3: Spielerei (Edles Text-Design statt Pillen) */
+.shoutout-zone {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.shoutout-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.shoutout-links-container {
+    display: flex;
+    gap: 32px;
+}
+
+.shoutout-link {
+    font-size: 15px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+}
+
+.shoutout-link .arrow {
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-muted);
+}
+
+.shoutout-link:hover {
+    color: var(--text-muted);
+}
+
+.shoutout-link:hover .arrow {
+    transform: translateX(4px);
+    color: var(--text-main);
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    justify-content: space-between; /* Platziert die Elemente links und rechts */
+    align-items: center;
+    border-top: 1px solid var(--card-border); /* Behält den Rahmen bei */
+    padding-top: 24px;
+    margin-top: 12px;
+    width: 100%;
+    max-width: 800px; /* Passt sich exakt der Breite deines Dashboards an */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 12px; /* Vergrößert die Klickfläche massiv (Fitts's Law) */
+    margin: -12px; /* Kompensiert das Padding, damit das Layout nicht springt */
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer-icon-link svg {
+    width: 20px; /* Icon selbst dezent vergrößert für bessere Sichtbarkeit */
+    height: 20px;
+    fill: var(--text-muted);
+    transition: fill 0.2s ease;
+}
+
+.footer-icon-link:hover svg {
+    fill: var(--text-main);
+}
+
+.footer-icon-link:hover {
+    transform: scale(1.08); /* Minimaler, edler Vergrößerungs-Effekt beim Hover */
+}
+
+.footer-link {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer-link:hover {
+    color: var(--text-main);
+}
+
+@media (max-width: 600px) {
+    body { padding: 64px 16px 40px 16px; }
+    .theme-toggle { top: 16px; right: 16px; }
+    .premium-grid { grid-template-columns: 1fr; }
+    .grid-full { grid-column: span 1; }
+    .shoutout-links-container { flex-direction: column; gap: 16px; }
+}

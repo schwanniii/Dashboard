@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum</title>
+    <!-- Nutzt deine bestehende CSS für nahtloses Design -->
+    <link rel="stylesheet" href="index.css">
+    <style>
+        .impressum-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        /* Eleganter Zurück-Knopf mit inverser Micro-Animation */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+            align-self: flex-start;
+        }
+
+        .back-btn .arrow {
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .back-btn:hover {
+            color: var(--text-main);
+        }
+
+        .back-btn:hover .arrow {
+            transform: translateX(-4px);
+        }
+
+        /* Struktur für die rechtlichen Inhalte */
+        .legal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .legal-section h2 {
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 8px;
+            color: var(--text-main);
+        }
+
+        .legal-section p {
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .legal-section address {
+            font-style: normal;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+<body>
+
+    <!-- Die CSS-Klasse "dark" wird per JS an den Body übergeben, falls aktiv -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.body.classList.add('dark');
+        }
+    </script>
+
+    <div class="impressum-container">
+        
+        <!-- Zurück zum Dashboard Knopf -->
+        <a href="index.html" class="back-btn">
+            <span class="arrow">←</span> Zurück zum Dashboard
+        </a>
+
+        <header class="header">
+            <h1>Impressum</h1>
+        </header>
+
+        <main class="legal-content">
+            
+            <section class="legal-section">
+                <h2>Angaben gemäß § 5 DDG</h2>
+                <address>
+                    <p>Jannis Büsing</p>
+                    <p>Schulbuschweg 5</p>
+                    <p>26419 Schortens</p>
+                    <p>Deutschland</p>
+                </address>
+            </section>
+
+            <section class="legal-section">
+                <h2>Kontakt</h2>
+                <a href="mailto:jannis.buesing@gmx.de" class="profile-email">jannis.buesing@gmx.de</a>
+            </section>
+
+            <section class="legal-section">
+                <h2>Haftungsausschluss</h2>
+                <h2 style="font-size: 16px">Haftung für Inhalte</h2>
+                <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>

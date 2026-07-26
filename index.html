@@ -3,214 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#1a1a2e">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Dashboard">
     <title>Dashboard</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #fafafa;
-            color: #1a1a1a;
-            min-height: 100vh;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 520px;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding-top: 12px;
-        }
-
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 6px;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-        }
-
-        .header p {
-            color: #888;
-            font-size: 13px;
-            font-weight: 400;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-bottom: 60px;
-        }
-
-        .project-card {
-            background: #ffffff;
-            border: 1px solid #e8e8e8;
-            border-radius: 8px;
-            padding: 16px;
-            text-decoration: none;
-            color: #1a1a1a;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .project-card:hover {
-            border-color: #d0d0d0;
-            background: #fefefe;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-
-        .project-card:active {
-            background: #f8f8f8;
-        }
-
-        .project-icon {
-            font-size: 24px;
-            min-width: 24px;
-        }
-
-        .project-info {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .project-title {
-            font-weight: 500;
-            font-size: 15px;
-            margin-bottom: 3px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-
-        .external-link {
-            color: #bbb;
-            font-size: 16px;
-            transition: color 0.2s;
-        }
-
-        .project-card:hover .external-link {
-            color: #666;
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 24px;
-            }
-
-            .project-card {
-                padding: 14px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="index.css">
+    <!-- Script wird am Ende geladen, um das DOM nicht zu blockieren -->
+    <script src="index.js" defer></script>
+    <script src="theme.js"></script>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Meine Projekte</h1>
-        </div>
 
-        <div id="projectsList" class="projects-grid">
-            <!-- Projekte werden hier eingefügt -->
+    <!-- Theme-Wechsler -->
+    <div class="theme-menu-container">
+        <!-- Der sichtbare Button, der dynamisch das aktive Icon zeigt -->
+        <button id="themeToggleBtn" class="theme-toggle-btn" aria-label="Farbschema wechseln" aria-haspopup="listbox" aria-expanded="false">
+            <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-system" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        </button>
+
+        <!-- Das elegante, schwebende Dropdown-Menü -->
+        <div id="themeDropdown" class="theme-dropdown">
+            <div class="theme-option" data-value="light">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                <span>Light</span>
+            </div>
+            <div class="theme-option" data-value="dark">
+                <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                <span>Dark</span>
+            </div>
+            <div class="theme-option" data-value="system">
+                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span>System</span>
+            </div>
         </div>
     </div>
 
-    <script>
-        const projects = [
-            {
-                title: "Stadt-Land-Fluss",
-                url: "https://schwanniii.github.io/Stadt-Land-Fluss/",
-                icon: "🏙"
-            },
+    <div class="dashboard">
+        
+        <header class="header">
+            <h1>Projekte</h1>
+            <div class="profile-info">
+                <span class="profile-name">Jannis Büsing</span>
+                <span class="profile-divider">•</span>
+                <a href="mailto:jannis.buesing@gmx.de" class="profile-email">jannis.buesing@gmx.de</a>
+            </div>
+        </header>
 
-            {
-                title: "Codememes",
-                url: "https://codenames-adgg.onrender.com/#/",
-                icon: "👨‍💻"
-            },
+        <!-- ZONE 1: MEISTERWERK (Rang 1) -->
+        <section class="hero-zone">
+            <a href="https://ki-mindmap.vercel.app/" class="card" target="_blank" rel="noopener noreferrer">
+                <svg class="card-icon" viewBox="0 0 24 24"><path d="M12.983 21.186a1 1 0 0 1-1.966 0 10 10 0 0 0-8.203-8.203 1 1 0 0 1 0-1.966 10 10 0 0 0 8.203-8.203 1 1 0 0 1 1.966 0 10 10 0 0 0 8.203 8.203 1 1 0 0 1 0 1.966 10 10 0 0 0-8.203 8.203"/></svg>
+                <div class="card-title">KI-Mindmap</div>
+            </a>
+        </section>
 
-            {
-                title: "NATO-Alphabet",
-                url: "https://schwanniii.github.io/NATO-Alphabet/",
-                icon: "🔤"
-            },
+        <!-- ZONE 2: PREMIUM KOLLEKTION -->
+        <section class="premium-grid">
+            
+            <!-- Rang 2 nimmt die volle Breite ein -->
+            <a href="https://codememes.onrender.com/" class="card grid-full" target="_blank" rel="noopener noreferrer">
+                <svg class="card-icon" viewBox="0 0 24 24"><path d="M18 21a8 8 0 0 0-16 0"/><circle cx="10" cy="8" r="5"/><path d="M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3"/></svg>
+                <div class="card-title">Codememes</div>
+            </a>
 
-            {
-                title: "Chemie organische Stoffe",
-                url: "https://schwanniii.github.io/Chemie-organische-Stoffe/",
-                icon: "🧪"
-            },
+            <!-- Rang 3 bis 6 im sauberen 2x2 Grid -->
+            <a href="https://jannis-buesing.github.io/Stadt-Land-Fluss/" class="card" target="_blank" rel="noopener noreferrer">
+                <svg class="card-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                <div class="card-title">Stadt-Land-Fluss</div>
+            </a>
 
-            {
-                title: "Karteikarten",
-                url: "https://schwanniii.github.io/Karteikarten/",
-                icon: "💳"
-            },
+            <a href="https://jannis-buesing.github.io/Risiko/" class="card" target="_blank" rel="noopener noreferrer">
+                <svg class="card-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                <div class="card-title">Risiko</div>
+            </a>
 
-            {
-                title: "bundeslaender-benennen",
-                url: "https://schwanniii.github.io/bundeslaender-benennen/",
-                icon: "🇩🇪"
-            },
+            <a href="https://jannis-buesing.github.io/bundeslaender-benennen/" class="card" target="_blank" rel="noopener noreferrer">
+                <svg class="card-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <div class="card-title">Bundesländer benennen</div>
+            </a>
 
-            {
-                title: "Risiko",
-                url: "https://schwanniii.github.io/Risiko/",
-                icon: "🎲"
-            },
+            <a href="https://jannis-buesing.github.io/NATO-Alphabet/" class="card" target="_blank" rel="noopener noreferrer">
+                <svg class="card-icon" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z"/></svg>
+                <div class="card-title">NATO-Alphabet</div>
+            </a>
+        </section>
 
-            {
-                title: "Schere-Stein-Papier",
-                url: "https://schwanniii.github.io/Schere-Stein-Papier/",
-                icon: "✂️"
-            },
-
-            {
-                title: "Zeitrechner",
-                url: "https://schwanniii.github.io/Zeitrechner/",
-                icon: "⏰"
-            },
-
-            {
-                title: "Kosinusaehnlichkeit",
-                url: "https://schwanniii.github.io/Kosinusaehnlichkeit/",
-                icon: "🔢"
-            },
-        ];
-
-        // Projekte automatisch rendern
-        function renderProjects() {
-            const projectsList = document.getElementById("projectsList");
-            projectsList.innerHTML = projects.map(project => `
-                <a href="${project.url}" class="project-card" target="_blank" rel="noopener noreferrer">
-                    <div class="project-icon">${project.icon}</div>
-                    <div class="project-info">
-                        <div class="project-title">${project.title}</div>
-                    </div>
-                    <div class="external-link">→</div>
+        <!-- ZONE 3: SPIELEREI (Keine Pillen, edle Text-Links) -->
+        <section class="shoutout-zone">
+            <span class="shoutout-label">Spielerei</span>
+            <div class="shoutout-links-container">
+                <a href="https://jannis-buesing.github.io/Zeitrechner/" class="shoutout-link" target="_blank" rel="noopener noreferrer">
+                    Zeitrechner <span class="arrow">→</span>
                 </a>
-            `).join("");
-        }
+                <a href="https://jannis-buesing.github.io/Schere-Stein-Papier/" class="shoutout-link" target="_blank" rel="noopener noreferrer">
+                    Schere-Stein-Papier <span class="arrow">→</span>
+                </a>
+            </div>
+        </section>
 
-        // Beim Laden der Seite
-        renderProjects();
-    </script>
+       <footer class="footer">
+            <!-- GitHub Icon-Link -->
+            <a href="https://github.com/jannis-buesing" class="footer-icon-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profil">
+                <svg role="img" viewBox="0 0 24 24">
+                    <title>GitHub</title>
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                </svg>
+            </a>
+            
+            <!-- Impressum-Link -->
+            <a href="impressum.html" class="footer-link">Impressum</a>
+        </footer>
+
+    </div>
 </body>
 </html>
